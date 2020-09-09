@@ -13,10 +13,15 @@ class Database:
         """Contructor function for Database class,
 
         Creates a connection to connection_name and connection_port, using MongoClient()"""
-        self.connection = pymongo.MongoClient(connection_name, connection_port)
+        # Create a connection if available
+        if isinstance(connection_name, str) and isinstance(connection_port, int):
+            self.connection = pymongo.MongoClient(connection_name, connection_port)
+        # Otherwise use the defaults
+        else:
+            self.connection = pymongo.MongoClient("localhost", 27017)
 
     def find_documents(
-        self, database_name: str, collection_name: str, filters: dict={}
+        self, database_name: str, collection_name: str, filters: dict = {}
     ) -> list:
         """Finds documents within a collection according to the filter
 
@@ -60,4 +65,3 @@ class Database:
                     .acknowledged
                 )
         return False
-
