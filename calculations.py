@@ -12,10 +12,8 @@ class Calculations:
 
         Aqcuires and assembles all matches into match objects"""
         self.matches = []
-        self._database_name = "scouting_system"
-        self._connection_name = "localhost"
-        self._connection_port = 27017
-        self.db = database.Database(self._connection_name, self._connection_port)
+        self.database_name = "scouting_system"
+        self.db = database.Database("localhost", 27017)
         comp_matches = self.db.find_documents("scouting_system", "matches")
         for comp_match in comp_matches:
             self.matches.append(
