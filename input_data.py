@@ -23,10 +23,12 @@ def repeat_input(input_message):
 
 def add_match():
     """Takes user input to insert a match into the database"""
+    # TODO: Duplicates
+    # TODO: Add team to db if not already in
     team_number = repeat_input("Enter the team number: ")
     match_num = repeat_input("Enter the match number: ")
     num_balls = repeat_input("Enter the number of balls scored by the team: ")
-    alliance_color = input("Enter the alliance color: ").lower()
+    alliance_color = input("Enter the alliance color: ").strip()
     while alliance_color not in ["red", "blue"]:
         print("please enter red or blue")
         alliance_color = input("Enter the alliance color: ").lower()
@@ -45,8 +47,10 @@ def add_match():
 
 def add_team():
     """Takes user input to insert a team into the database"""
+    # TODO: Duplicates
+    # TODO: Update Information
     team_number = repeat_input("Enter the team number: ")
-    team_name = input("Enter the team name: ")
+    team_name = input("Enter the team name: ").strip()
     rookie_year = repeat_input("Enter the team's rookie year: ")
     db = database.Database("localhost", 27017)
     db.insert_documents(

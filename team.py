@@ -20,9 +20,9 @@ class Team:
         """Gets the relevant info about a team formatted in a string
 
         Returns a string with the essential information about the team object"""
-        return f"""Team Number: {self.team_number}
+        return f"""\nTeam Number: {self.team_number}
             \nTeam Name: {self.team_name}
-            \nRookie Year: {self.rookie_year}"""
+            \nRookie Year: {self.rookie_year}\n"""
 
     def to_dict(self):
         """ Returns a dictionary with all class properties"""
