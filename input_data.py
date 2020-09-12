@@ -56,5 +56,5 @@ def add_team():
             "team_number": team_number,
             "team_name": team_name,
             "rookie_year": rookie_year,
-        },
+        }
     )
