@@ -24,7 +24,7 @@ class Match:
         return f"""Number of Balls Scored: {self.num_balls}
                   \nAlliance Color: {self.alliance_color}
                   \nMatch Number: {self.match_num}
-                  \nTeam Number: {self.team_number}"""
+                  \nTeam Number: {self.team_number}\n"""
 
     def to_dict(self):
         """Returns a dictionary representing the match object"""

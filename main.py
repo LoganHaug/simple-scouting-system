@@ -24,11 +24,11 @@ def switch_case(switch_dict, key):
 def take_input():
     """Takes user input to either enter data or perform calculations"""
     user_input_type = input(
-        "Would you like to 'enter data', 'perform calculations', or 'quit': "
+        "Would you like to enter 'data', perform 'calcs', or 'quit': "
     )
     input_choice = {
-        "enter data": {"function_name": enter_data, "parameters": None},
-        "perform calculations": {
+        "data": {"function_name": enter_data, "parameters": None},
+        "calcs": {
             "function_name": perform_calculations,
             "parameters": None,
         },
@@ -41,11 +41,11 @@ def take_input():
 def enter_data():
     """Performs data entry based on user input"""
     user_input_choice = input(
-        "Would you like to 'enter matches', 'enter teams' or 'quit': "
+        "Would you like to enter 'matches', enter 'teams' or 'quit': "
     )
     input_choice = {
-        "enter matches": {"function_name": input_data.add_match, "parameters": None},
-        "enter teams": {"function_name": input_data.add_team, "parameters": None},
+        "matches": {"function_name": input_data.add_match, "parameters": None},
+        "teams": {"function_name": input_data.add_team, "parameters": None},
         "quit": {"function_name": take_input, "parameters": None},
         "default": {"function_name": enter_data, "parameters": None},
     }
@@ -56,7 +56,7 @@ def enter_data():
 def perform_calculations():
     """Performs calculations based on user input"""
     user_input_type = input(
-        "What calculation would you like to perform (type 'list calculations' to list calculations, 'quit'): "
+        "What calculation would you like to perform (type 'list calcs' to list calculations, or 'quit'): "
     )
     calculator = calculations.Calculations()
     user_team, user_match = 0, 0
@@ -67,7 +67,7 @@ def perform_calculations():
             if user_input_type == "match info":
                 user_match = input_data.repeat_input("Enter a match number: ")
     input_choice = {
-        "list calculations": {
+        "list calcs": {
             "function_name": print,
             "parameters": [calculator.get_calculations()],
         },

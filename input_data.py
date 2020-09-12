@@ -1,5 +1,5 @@
 """Takes user input to store a match in the database"""
-# Internal imports
+
 import database
 
 
@@ -23,16 +23,35 @@ def repeat_input(input_message):
 
 def add_match():
     """Takes user input to insert a match into the database"""
-    # TODO: Duplicates
-    # TODO: Add team to db if not already in
     team_number = repeat_input("Enter the team number: ")
     match_num = repeat_input("Enter the match number: ")
+    db = database.Database("localhost", 27017)
+    if (
+        db.find_documents(
+            "scouting_system",
+            "matches",
+            {"team_number": team_number, "match_num": match_num},
+        )
+        != []
+    ):
+        while True:
+            update_info = input(
+                "\nThis team has already played this match, would you like to update the match (yes / no): "
+            )
+            if update_info.strip().lower() in ["n", "no"]:
+                return
+            if update_info.strip().lower() in ["y", "yes"]:
+                break
     num_balls = repeat_input("Enter the number of balls scored by the team: ")
     alliance_color = input("Enter the alliance color: ").strip()
     while alliance_color not in ["red", "blue"]:
         print("please enter red or blue")
         alliance_color = input("Enter the alliance color: ").lower()
-    db = database.Database("localhost", 27017)
+    db.delete_documents(
+        "scouting_system",
+        "matches",
+        {"team_number": team_number, "match_num": match_num},
+    )
     db.insert_documents(
         "scouting_system",
         "matches",
@@ -43,16 +62,42 @@ def add_match():
             "alliance_color": alliance_color,
         },
     )
+    if (
+        db.find_documents("scouting_system", "teams", {"team_number": team_number})
+        == []
+    ):
+        print("New team detected, please enter the following")
+        db.insert_documents(
+            "scouting_system",
+            "teams",
+            {
+                "team_number": team_number,
+                "team_name": input("Enter the team name: "),
+                "rookie_year": repeat_input("Enter the team's rookie year: "),
+            },
+        )
 
 
 def add_team():
     """Takes user input to insert a team into the database"""
-    # TODO: Duplicates
-    # TODO: Update Information
     team_number = repeat_input("Enter the team number: ")
+    db = database.Database("localhost", 27017)
+    if (
+        db.find_documents("scouting_system", "teams", {"team_number": team_number})
+        != []
+    ):
+        while True:
+            update_info = input(
+                "Team is already in database, would you like to update it (yes / no): "
+            )
+            if update_info.strip().lower() in ["n", "no"]:
+                return
+            elif update_info.strip().lower() in ["y", "yes"]:
+                break
     team_name = input("Enter the team name: ").strip()
     rookie_year = repeat_input("Enter the team's rookie year: ")
     db = database.Database("localhost", 27017)
+    db.delete_documents("scouting_system", "teams", {"team_number": team_number})
     db.insert_documents(
         "scouting_system",
         "teams",
@@ -60,5 +105,5 @@ def add_team():
             "team_number": team_number,
             "team_name": team_name,
             "rookie_year": rookie_year,
-        }
+        },
     )

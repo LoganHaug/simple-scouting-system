@@ -186,7 +186,7 @@ Don't require anything:\n
                 comp_match.team_number == team_number
                 and comp_match.match_num == match_number
             ):
-                return comp_match.get_match_info()
+                return comp_match.get_info()
         return "Could not find the match"
 
     def list_teams(self):
