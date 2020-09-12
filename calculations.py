@@ -16,11 +16,14 @@ class Calculations:
         self.db = database.Database("localhost", 27017)
         comp_matches = self.db.find_documents("scouting_system", "matches")
         for comp_match in comp_matches:
+            team = self.db.find_documents(
+                "scouting_system", "teams", {"team_number": comp_match["team_number"]}
+            )[0]
             self.matches.append(
                 match.Match(
-                    comp_match["team_number"],
-                    comp_match["team_name"],
-                    comp_match["rookie_year"],
+                    team.Team(
+                        team["team_number"], team["team_name"], team["rookie_year"]
+                    ),
                     comp_match["num_balls"],
                     comp_match["alliance_color"],
                     comp_match["match_num"],
@@ -33,11 +36,14 @@ class Calculations:
         Returns None"""
         comp_matches = self.db.find_documents("scouting_system", "matches")
         for comp_match in comp_matches:
+            team = self.db.find_documents(
+                "scouting_system", "teams", {"team_number": comp_match["team_number"]}
+            )[0]
             self.matches.append(
                 match.Match(
-                    comp_match["team_number"],
-                    comp_match["team_name"],
-                    comp_match["rookie_year"],
+                    team.Team(
+                        team["team_number"], team["team_name"], team["rookie_year"]
+                    ),
                     comp_match["num_balls"],
                     comp_match["alliance_color"],
                     comp_match["match_num"],

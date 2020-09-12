@@ -12,14 +12,9 @@ class Team:
         team_number is the team's number
         team_name is the team's name
         rookie_year is the team's starting year"""
-        if (
-            isinstance(team_number, int)
-            and isinstance(team_name, str)
-            and isinstance(rookie_year, int)
-        ):
-            self.team_number = team_number
-            self.team_name = team_name
-            self.rookie_year = rookie_year
+        self.team_number = team_number
+        self.team_name = team_name
+        self.rookie_year = rookie_year
 
     def get_info(self):
         """Gets the relevant info about a team formatted in a string
