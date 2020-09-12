@@ -21,23 +21,23 @@ class Database:
             self.connection = pymongo.MongoClient("localhost", 27017)
 
     def find_documents(
-        self, database_name: str, collection_name: str, filters: dict = {}
+        self, database_name: str, collection_name: str, collection_filter: dict = {}
     ) -> list:
         """Finds documents within a collection according to the filter
 
         database_name is the name of the database to search
         collection_name is the collection to search
-        filters are what to filer documents by
+        filter are what to filer documents by
         Returns a list of matched documents"""
         if (
             isinstance(database_name, str)
             and isinstance(collection_name, str)
-            and isinstance(filters, dict)
+            and isinstance(collection_filter, dict)
         ):
             return [
                 document
                 for document in self.connection[database_name][collection_name].find(
-                    filters
+                    collection_filter
                 )
             ]
         return None
@@ -64,4 +64,25 @@ class Database:
                     .insert_many(documents)
                     .acknowledged
                 )
+        return False
+
+    def delete_documents(
+        self, database_name: str, collection_name: str, collection_filter: dict
+    ) -> bool:
+        """Deletes documents in a collection according to a user-defined filter
+
+        database_name is the name of the database to search
+        collection_name is the collection to search
+        filter is what to filer documents by
+        Returns whether or not whether the deletions were successful"""
+        if (
+            isinstance(database_name, str)
+            and isinstance(collection_name, str)
+            and isinstance(collection_filter, dict)
+        ):
+            return (
+                self.connection[database_name][collection_name]
+                .delete_one(collection_filter)
+                .acknowledged
+            )
         return False
